@@ -14,3 +14,8 @@ namespace CQRS.Domain.EntityDomains
         public ProductStatuses ProductStatus { get; set; }
     }
 }
+
+
+// Business process managment
+// state mangament design pattern
+// Open Telemintry

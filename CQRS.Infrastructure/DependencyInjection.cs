@@ -17,17 +17,17 @@ namespace CQRS.Infrastructure
         {
 
 
-            /*//Commands & Query points to different database
-            services.AddDbContext<ApplicationWriteDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("Both"), x => x.MigrationsAssembly(typeof(ApplicationWriteDbContext).Assembly.FullName)));
+            /*            //Commands & Query points to different database
+                        services.AddDbContext<ApplicationWriteDbContext>(options =>
+                            options.UseSqlServer(configuration.GetConnectionString("Both"), x => x.MigrationsAssembly(typeof(ApplicationWriteDbContext).Assembly.FullName)));
 
-            services.AddScoped<IWriteDbContext>(provider => provider.GetRequiredService<ApplicationWriteDbContext>());
+                        services.AddScoped<IWriteDbContext>(provider => provider.GetRequiredService<ApplicationWriteDbContext>());
 
-            services.AddDbContext<ApplicationReadDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("Both"))
-                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+                        services.AddDbContext<ApplicationReadDbContext>(options =>
+                            options.UseSqlServer(configuration.GetConnectionString("Both"))
+                            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
-            services.AddScoped<IReadDbContext>(provider => provider.GetRequiredService<ApplicationReadDbContext>());*/
+                        services.AddScoped<IReadDbContext>(provider => provider.GetRequiredService<ApplicationReadDbContext>());*/
 
 
 
