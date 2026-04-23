@@ -1,4 +1,7 @@
 ﻿using CQRS.Application.Common;
+using CQRS.Application.Events.BrokerEvents;
+using CQRS.Application.Events.BrokerEvents.Product;
+using CQRS.Application.Interfaces.Brokers;
 using CQRS.Application.Interfaces.Infrastructure;
 using CQRS.Domain.Enums;
 using MediatR;
@@ -12,14 +15,14 @@ namespace CQRS.Application.Services.Product.Commands.CreateProduct
     public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, int>
     {
         private readonly IWriteDbContext _writeContext;
-        private readonly IReadDbContext _readContext;
+        private readonly IBrokerProducer _producerBroker;
 
         public CreateProductCommandHandler(
-            IWriteDbContext writeContext, 
-            IReadDbContext readContext)
+            IWriteDbContext writeContext,
+            IBrokerProducer producerBroker)
         {
             _writeContext = writeContext;
-            _readContext = readContext;
+            _producerBroker = producerBroker;
         }
 
 
@@ -36,12 +39,16 @@ namespace CQRS.Application.Services.Product.Commands.CreateProduct
             _writeContext.Products.Add(product);
             await _writeContext.SaveChangesAsync(cancellationToken);
 
-            if (Constants.IsReadWriteNotSameDatabase)
+            var eventt = new ProductCreatedEvent
             {
-                _readContext.Products.Add(product);
-                product.Id = 0;
-                await _readContext.SaveChangesAsync(cancellationToken);
-            }
+                Id = product.Id,
+                Name = product.Name,
+                Stock = product.Stock,
+                UnitPrice = product.UnitPrice,
+                ProductStatus = product.ProductStatus,
+            };
+
+            await _producerBroker.PublishAsync(eventt, BrokerEventsEnum.ProductCreatedEvent);
             return product.Id;
         }
     }

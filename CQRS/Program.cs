@@ -1,6 +1,8 @@
 using CQRS.API.Middlewares;
 using CQRS.Application;
+using CQRS.CrossCutting.Configurations;
 using CQRS.Infrastructure;
+using System.Runtime;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,9 +13,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.Configure<ScalingConfigurations>(
+    builder.Configuration.GetSection(nameof(ScalingConfigurations)));
 
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddApplication();
+await builder.Services.AddApplication();
 
 // -------------------------------------------------------------------------------------------------------------------
 var app = builder.Build();
