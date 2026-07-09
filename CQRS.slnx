@@ -1,7 +1,6 @@
 <Solution>
   <Project Path="CQRS.Application/CQRS.Application.csproj" />
   <Project Path="CQRS.Base/CQRS.Domain.csproj" />
-  <Project Path="CQRS.CrossCutting/CQRS.CrossCutting.csproj" Id="9d8e13f4-9f2b-4ffe-8e5d-9ad4b4eedc30" />
   <Project Path="CQRS.Infrastructure/CQRS.Infrastructure.csproj" />
   <Project Path="CQRS/CQRS.API.csproj" />
 </Solution>

@@ -15,7 +15,7 @@ namespace CQRSAPI.Controllers
 
         public ProductController(ISender mediator) => _mediator = mediator;
 
-        [HttpPost]
+        [HttpPost("CreateProduct")]
         public async Task<IActionResult> Create(CreateProductCommand command)
         {
             var id = await _mediator.Send(command);

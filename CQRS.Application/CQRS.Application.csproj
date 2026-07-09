@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CQRS.Base\CQRS.Domain.csproj" />
-    <ProjectReference Include="..\CQRS.CrossCutting\CQRS.CrossCutting.csproj" />
   </ItemGroup>
 
 </Project>

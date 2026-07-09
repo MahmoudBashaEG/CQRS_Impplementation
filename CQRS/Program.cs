@@ -1,7 +1,7 @@
 using CQRS.API.Middlewares;
 using CQRS.Application;
-using CQRS.CrossCutting.Configurations;
 using CQRS.Infrastructure;
+using CQRS.Infrastructure.Configurations;
 using System.Runtime;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,19 +11,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<ScalingConfigurations>(
     builder.Configuration.GetSection(nameof(ScalingConfigurations)));
 
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.Configure<RabbitMqOptions>(
+    builder.Configuration.GetSection(nameof(RabbitMqOptions)));
+
+
+await builder.Services.AddInfrastructure(builder.Configuration);
 await builder.Services.AddApplication();
 
 // -------------------------------------------------------------------------------------------------------------------
 var app = builder.Build();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-// Configure the HTTP request pipeline.
+/*// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -35,7 +39,7 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
         options.RoutePrefix = string.Empty;
     });
-}
+}*/
 
 app.UseHttpsRedirection();
 
